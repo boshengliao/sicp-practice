@@ -87,3 +87,87 @@ circumference
   (not (< x y)))
 (gt2 1 2)
 (gt2 2 1)
+
+
+(define (sqr-1 x) (* x x))
+
+(define (sqr-2 x)
+  (exp (double-1 (log x))))
+
+(define (double-1 x) (+ x x))
+
+(sqr-1 3)
+(sqr-2 3)
+(double-1 3)
+
+
+(define (testprint x)
+  (display "hello world\n")
+  (+ x x))
+
+(testprint 1)
+
+
+(define (t-factorial n)
+  (if (= n 1)
+      1
+      (* n (t-factorial (- n 1)))))
+
+(t-factorial 5)
+
+(define (t-factorial-1 n)
+  (define (t-iter r c)
+    (if (> c n)
+        r
+        (t-iter (* r c)
+                (+ c 1))))
+  (t-iter 1 1))
+
+(t-factorial-1 6)
+
+
+(define (fabiter x)
+  (define (iter m n h)
+    (if (= h x)
+        m
+        (iter n
+              (+ m n)
+              (+ h 1))))
+  (iter 0 1 0))
+
+(fabiter 12)
+
+
+(define (count-change amount)
+  (cc amount 5))
+
+(define (cc amount kinds-of-coins)
+  (cond ((= amount 0) 1)
+        ((or (< amount 0) (= kinds-of-coins 0)) 0)
+        (else (+ (cc amount
+                     (- kinds-of-coins 1))
+                 (cc (- amount
+                        (first-denomination kinds-of-coins))
+                     kinds-of-coins)))))
+
+(define (first-denomination kinds-of-coins)
+  (cond ((= kinds-of-coins 1) 1)
+        ((= kinds-of-coins 2) 5)
+        ((= kinds-of-coins 3) 10)
+        ((= kinds-of-coins 4) 25)
+        ((= kinds-of-coins 5) 50)))
+
+;(count-change 100)
+;(count-change 10)
+
+(define (cc1 x)
+  (cc2 x 1 0))
+
+(define (cc2 at koc ct)
+  (if (> (- at (first-denomination koc)) 0)
+      (cc2 (- at (first-denomination koc)) koc ct)
+      (if (= (- at (first-denomination koc)) 0)
+          (cc2 at (+ koc 1) (+ ct 1))
+          ct)))
+
+(cc1 10)
