@@ -1,4 +1,4 @@
-; 1.30
+; 1.29
 (define (cube x)
 (* x x x))
 
@@ -35,18 +35,10 @@
         0
         (+ (term counter)
            (func-1 (inc counter) inc))))
-  
-  (define (iter-s x y)
-    (if (> x n)
-        y
-        (iter-s (inc x)
-                (+ y (term x)))))
-  
   (* (/ h 3.0)
      ; 这里用了 (exact->inexact 0) 代替 0
      ; 才能正确精确要小数点后面的位数
-     ;(func-1 (exact->inexact 0) inc)
-     (iter-s (exact->inexact 0) 0)))
+     (func-1 (exact->inexact 0) inc)))
 
 (simpson cube 0 1 100)
 (simpson cube 0 1 1000)
