@@ -1,0 +1,28 @@
+; 1.38
+
+; 递归计算过程
+(define (con-frac n d k)
+  (define (f func x y z r tmp)
+    (/ x (+ y (func x y z r tmp))))
+  (define (iter x y z r tmp)
+    (let ((next (+ z 1)))
+      (display "y: ")
+      (display y)
+      (display " ")
+      (display "r: ")
+      (display r)
+      (display " ")
+      (display "z: ")
+      (display z)
+      (display " ")
+      (display "tmp: ")
+      (display tmp)
+      (newline)
+      (cond ((> z k) 0)
+            ((= z 1) (f iter x 2.0 next 0 2.0))
+            ((= r 2) (f iter x (+ tmp 2) next 0 (+ tmp 2)))
+            (else (f iter x 1.0 next (+ r 1) tmp)))))
+    (+ (iter n d 0 0 0)
+       2))
+
+(con-frac 1.0 1.0 15)
