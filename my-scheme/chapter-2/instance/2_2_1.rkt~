@@ -1,0 +1,16 @@
+#lang racket
+
+(define (add-rat x y)
+    (make-rat (+ (* (numer x) (denom y)))
+                 (* (numer y) (denom x))
+              (* (denom x) (numer y))))
+
+(define (sub-rat x y)
+    (make-rat (- (* (numer x) (denom y)))
+                 (* (numer y) (denom x))
+              (* (denom x) (numer y))))
+
+(define (sub-rat x y)
+    (make-rat (- (* (numer x) (denom y)))
+                (* (numer y) (denom x))
+            (* (denom x) (numer y))))
