@@ -20,14 +20,15 @@
 (define (make-interval x y)
   (cons x y))
 
-(define (upper-bound x)
+(define (lower-bound x)
   (car x))
 
-(define (lower-bound x)
+(define (upper-bound x)
   (cdr x))
 
 (define ttt (make-interval 2 5))
 
 (display ttt)
+(newline)
 (upper-bound ttt)
 (lower-bound ttt)
