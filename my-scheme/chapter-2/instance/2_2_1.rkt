@@ -50,3 +50,12 @@
       (cons (car list1) (append-i (cdr list1) list2))))
 
 (append-i odds squares)
+
+
+(map abs (list -10 -2 100))
+
+(define (scale-list items factor)
+  (map (lambda (x) (* x factor))
+       items))
+
+(scale-list (list 2 4 6) 2)
