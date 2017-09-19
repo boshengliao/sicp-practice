@@ -16,3 +16,23 @@
          (cons (car set1)
                (intersection-set (cdr set1) set2)))
         (else (intersection-set (cdr set1) set2))))
+
+(define (element-of-set?-new x set)
+  (cond ((null? set) #f)
+        ((= x (car set)) #t)
+        ((< x (car set)) #f)
+        (else (element-of-set?-new x (cdr set)))))
+
+(define (intersection-set-new set1 set2)
+  (if (or (null? set1) (null? set2))
+      '()
+      (let ((x1 (car set1))
+            (x2 (car set2)))
+        (cond ((= x1 x2)
+               (cons x1
+                     (intersection-set-new (cdr se1)
+                                           (cdr set2))))
+              ((< x1 x2)
+               (intersection-set-new (cdr set1) set2))
+              ((> x1 x2)
+               (intersection-set-new set1 (cdr set2)))))))
