@@ -26,37 +26,41 @@
 
 
 ;;;; Ben
-(define (real-part-new z) (car z))
+(define (real-part-rectangular z) (car z))
 
-(define (imag-part-new z) (cdr z))
+(define (imag-part-rectangular z) (cdr z))
 
 (define (square x) (* x x))
-(define (magnitude-new z)
-  (sqrt (+ (square (real-part z)) (square (imag-part z)))))
+(define (magnitude-rectangular z)
+  (sqrt (+ (square (real-part-rectangular z))
+           (square (imag-part-rectangular z)))))
 
-(define (angle-new z)
-  (atan (image-part-new z) (real-part-new z)))
+(define (angle-rectangular z)
+  (atan (image-part-rectangular z)
+        (real-part-rectangular z)))
 
-(define (make-from-real-imag x y) (cons x y))
+(define (make-from-real-imag-rectangular x y)
+  (cons x y))
 
-(define (make-from-mag-ang r a)
+(define (make-from-mag-ang-rectangular r a)
   (cons (* r (cos a)) (* r (sin a))))
 
 
 ;;;;Alyssa
 
-(define (real-part-new1 z)
-  (* (magnitude-new1 z) (cos (angle-new1 z))))
+(define (real-part-polar z)
+  (* (magnitude-polar z)
+     (cos (angle-polar z))))
 
-(define (imag-part-new1 z)
-  (* (magnitude-new1 z) (sin (angle-new1 z))))
+(define (imag-part-polar z)
+  (* (magnitude-polar z) (sin (angle-polar z))))
 
-(define (magnitude-new1 z) (car z))
+(define (magnitude-polar z) (car z))
 
-(define (angle-new1 z) (cdr z))
+(define (angle-polar z) (cdr z))
 
-(define (make-from-real-imag-new1 x y)
+(define (make-from-real-imag-polar x y)
   (cons (sqrt (+ (square x) (square y)))
         (atan y x)))
 
-(define (make-from-mag-ang-new1 r a) (cons r a))
+(define (make-from-mag-ang-polar r a) (cons r a))
