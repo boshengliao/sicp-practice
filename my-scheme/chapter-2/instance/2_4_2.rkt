@@ -17,7 +17,7 @@
   (eq? (type-tag z) 'rectangular))
 
 (define (polar? z)
-  (eq? (contents z) 'polar))
+  (eq? (type-tag z) 'polar))
 
 ;;;; after alter
 (define (real-part-rectangular z) (car z))
