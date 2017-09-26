@@ -43,9 +43,8 @@ a) (1)上面用 get 获取标记为 deriv 且带有数据处理类型符号的�
     (make-sum (deriv (addend exp) var)
               (deriv (augend exp) var)))
   ;;
-  (define (tag x) (attach-tag '+ x))
   (put 'deriv '+
-       (lambda (x y) (tag (do-sum x y))))
+       (lambda (x y) (do-sum x y)))
   'done)
 
 (define (install-product-package)
@@ -57,7 +56,6 @@ a) (1)上面用 get 获取标记为 deriv 且带有数据处理类型符号的�
      (make-product (deriv (multiplier exp) var)
                    (multiplicand exp))))
   ;;
-  (define (tag x) (attach-tag '* x))
   (put 'deriv '*
-       (lambda (x y) (tag (do-product x y))))
+       (lambda (x y) (do-product x y)))
   'done)
