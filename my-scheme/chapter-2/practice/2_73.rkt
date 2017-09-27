@@ -59,3 +59,25 @@ a) (1)上面用 get 获取标记为 deriv 且带有数据处理类型符号的�
   (put 'deriv '*
        (lambda (x y) (do-product x y)))
   'done)
+
+
+;; c)
+(define (install-exponentiation-package)
+  ;;
+  (define (do-exponentiation exp base)
+    (make-product (make-exponentiation (base exp)
+                                       (exponent exp))
+                  (deriv-new (base exp) var)))
+  ;;
+  (put 'deriv '**
+       (lambda (x y) (do-exponentiation x y)))
+  'done)
+
+
+;; d)
+
+;如果使用相反的索引如
+((get (operator exp) 'deriv) (operands exp) var)
+;那么只需要把 put 过程中的 deriv 和操作符变换一下位置即可
+;如下:
+(put '+ 'deriv sum)
