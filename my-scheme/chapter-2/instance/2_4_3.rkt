@@ -1,5 +1,10 @@
 ; 2.4.3
 
+; 网上 copy 的函数定义
+(define *table* (make-hash))
+(define (get op type) (hash-ref *table* (list op type) false))
+(define (put op type val) (hash-set! *table* (list op type) val))
+
 (define (install-rectangular-package)
   ;;
   (define (real-part z) (car z))
