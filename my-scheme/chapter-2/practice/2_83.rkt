@@ -1,5 +1,8 @@
 ; 2.83
 
+(define (number x) (car x))
+(define (denom x) (cdr x))
+
 (define (raise x)
   (let ((type (car x)))
     (let ((s1 (eq? type 'complex))
