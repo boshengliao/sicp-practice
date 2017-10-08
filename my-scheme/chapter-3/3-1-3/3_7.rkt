@@ -11,17 +11,12 @@
     (set! balance (+ balance amount))
     balance)
   
-  (define identify
-    (lambda (v)
-      (if (eq? v password)
-          #t
-          #f)))
+  (define (identify v)
+    (if (eq? v password)
+        #t
+        #f))
   
-  (define set-new-account
-    (lambda (new)
-      (new-account new)))
-  
-  (define (new-account new)
+  (define (set-new-account new)
     (lambda (m p)
       (if (eq? p new)
           (dispatch m password)
