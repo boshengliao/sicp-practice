@@ -23,8 +23,7 @@
           "password wrong!")))
   
   (define (dispatch m p)
-    (cond ((eq? m 'identify) (identify p))
-          ((not (eq? p password))
+    (cond ((not (eq? p password))
            (lambda (p) "error password!"))
           ((eq? m 'withdraw) withdraw)
           ((eq? m 'deposit) deposit)
@@ -39,15 +38,10 @@
 
 ;;
 (define (make-joint account old new)
-  (if (account 'identify old)
-      ((account 'set-new-account old) new)
-      "password wrong identify!"))
-
-(a 'identify '1234)
+  ((account 'set-new-account old) new))
 
 (define b (make-joint a '123 '111))
 
-(b 'identify '111)
 ((b 'withdraw '111) 10)
 ((a 'withdraw '123) 10)
 ((a 'withdraw '123) 10)
