@@ -12,3 +12,6 @@
 
 z
 (cdddr (cdddr (cddddr z)))
+
+(last-pair z)
+; 程序会一直运行直到报错
