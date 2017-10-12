@@ -11,12 +11,14 @@
 
 ;;
 (define (cycle? x)
-  (if (pair? (car x))
-      (eq? (caar x) 'cycle)
-      (set-identify x)))
+  (cond ((null? x) #f)
+        ((pair? (car x))
+         (eq? (caar x) 'cycle))
+        (else (set-identify x))))
 
 (define (set-identify x)
   (set-car! x (cons 'cycle (car x)))
   (cycle? (cdr x)))
 
+(cycle? (list 1 2 4))
 (cycle? z)
