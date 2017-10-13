@@ -9,35 +9,18 @@
 
 (define z (make-cycle (list 'a 'b 'c)))
 
-(define (cycle? x)
-  (cond ((null? x) #f)
-        ((pair? (car x))
-         (eq? (caar x) 'cycle))
-        (else (set-identify x))))
-
-(define (set-identify x)
-  (set-car! x (cons 'cycle (car x)))
-  (cycle? (cdr x)))
-
-(cycle? (list 1 2 4))
-(cycle? z)
-
 ;;
-(define (cycle?1 x)
+(define (cycle? x)
   (define (iter a b)
-    (if (or (null? a)
-            (null? b))
-        #f
-        (let ((m1 (car a))
-              (m2 (cadr b))
-              (v1 (cdr a))
-              (v2 (cddr b)))
-          (cond ((or (null? m1)
-                     (null? m2))
-                 #f)
-                ((eq? m1 m2) #t)
-                (else (iter v1 v2))))))
+    (cond ((or (null? a)
+               (null? b)
+               (null? (cdr b)))
+           #f)
+          ((eq? (car a) (cadr b)) #t)
+          (else (iter (cdr a) (cddr b)))))
   (iter x x))
 
-;(cycle?1 (list 1 2 4))
-(cycle?1 z)
+(cycle? (list 1 2 4))
+(cycle? (list 1 2 3 4))
+(cycle? (list 1 2 3 4 5))
+(cycle? z)
