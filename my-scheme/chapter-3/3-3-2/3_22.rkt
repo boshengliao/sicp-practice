@@ -21,7 +21,7 @@
           "FRONT called with an empty queue"
           (car (front-ptr queue))))
 
-    (define (insert-queue! queue item)
+    (define (insert-queue! item)
       (let ((new-pair (cons item '())))
         (cond ((empty-queue? queue)
                (set-front-ptr! queue new-pair)
@@ -29,33 +29,32 @@
               (else
                (set-cdr! (rear-ptr queue) new-pair)
                (set-rear-ptr! queue new-pair)
-               (print-queue queue)))))
+               (print-queue)))))
 
-    (define (delete-queue! queue)
+    (define (delete-queue!)
       (cond ((empty-queue? queue)
              "DELETE called with an empty queue")
             (else
              (set-front-ptr! queue (cdr (front-ptr queue)))
-             (print-queue queue))))
+             (print-queue))))
 
-    (define (print-queue queue)
+    (define (print-queue)
+      (display queue)
+      (newline)
       (front-ptr queue))
     
     (define (dispatch m)
-      (cond ((eq? m 'front-ptr) front-ptr)
-            ((eq? m 'rear-ptr) rear-ptr)
-            ((eq? m 'set-front-ptr!) set-front-ptr!)
-            ((eq? m 'set-rear-ptr!) set-rear-ptr!)
-            ((eq? m 'empty-queue?) empty-queue?)
-            ((eq? m 'front-queue) front-queue)
-            ((eq? m 'insert-queue!) insert-queue!)
-            ((eq? m 'delete-queue!) delete-queue!)
-            ((eq? m 'print-queue) print-queue)
-            ))
+      (cond ((eq? m 'insert-queue!) insert-queue!)
+            ((eq? m 'delete-queue!) (delete-queue!))
+            ((eq? m 'print-queue) (print-queue))))
     dispatch))
 
 (define q (make-queue))
-((q 'insert-queue!) 'a)
-((q 'insert-queue!) 'b)
+;((q 'insert-queue!) 'a)
+
+;((q 'insert-queue!) 'b)
 (q 'delete-queue!)
-(q 'insert-queue!)
+((q 'insert-queue!) 'c)
+;(q 'print-queue)
+;(q 'delete-queue!)
+;(q 'delete-queue!)
