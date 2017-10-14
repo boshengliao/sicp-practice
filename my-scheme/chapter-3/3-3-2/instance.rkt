@@ -25,11 +25,14 @@
           (else
            (set-cdr! (rear-ptr queue) new-pair)
            (set-rear-ptr! queue new-pair)
-           queue))))
+           (print-queue queue)))))
 
 (define (delete-queue! queue)
   (cond ((empty-queue? queue)
-         "DELETE called with an empty queue"
+         "DELETE called with an empty queue")
          (else
           (set-front-ptr! queue (cdr (front-ptr queue)))
-          queue))))
+          (print-queue queue))))
+
+(define (print-queue queue)
+  (front-ptr queue))
