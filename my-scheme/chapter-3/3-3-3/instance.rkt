@@ -8,14 +8,14 @@
 
 (define (assoc key records)
   (cond ((null? records) #f)
-        ((equal? key (caar records)) (car record))
+        ((equal? key (caar records)) (car records))
         (else (assoc key (cdr records)))))
 
 (define (insert! key value table)
   (let ((record (assoc key table)))
     (if record
         (set-cdr! record value)
-        (set-sdr! table
+        (set-cdr! table
                   (cons (cons key value)
                         (cdr table)))))
   'ok)
