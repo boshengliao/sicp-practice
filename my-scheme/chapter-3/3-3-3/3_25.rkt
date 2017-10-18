@@ -2,13 +2,7 @@
 
 (define (make-table)
   (let ((local-table (list '*table*)))
-    (define (lookup key)
-      (let ((record (assoc key (cdr local-table))))
-        (if record
-            (cdr record)
-            #f)))
-    
-    (define (lookup-new keys)
+    (define (lookup keys)
       (define (iter a r)
         (if (null? a)
             r
@@ -27,7 +21,7 @@
             ((equal? key (caar records)) (car records))
             (else (assoc key (cdr records)))))
 
-    (define (insert!-new keys value)
+    (define (insert! keys value)
       (define (iter a v)
         (if (null? a)
             'ok
@@ -41,19 +35,10 @@
                      (iter (cdr a) v))
                     ))))
       (iter keys value))
-    
-    (define (insert! key value)
-      (let ((record (assoc key (cdr local-table))))
-        (if record
-            (set-cdr! record value)
-            (set-cdr! local-table
-                      (cons (cons key value)
-                            (cdr local-table)))))
-      'ok)
 
     (define (dispatch m)
-      (cond ((eq? m 'lookup-proc) lookup-new)
-            ((eq? m 'insert-proc!) insert!-new)
+      (cond ((eq? m 'lookup-proc) lookup)
+            ((eq? m 'insert-proc!) insert!)
             (else "Unknown operation -- TABLE")))
     dispatch))
 
