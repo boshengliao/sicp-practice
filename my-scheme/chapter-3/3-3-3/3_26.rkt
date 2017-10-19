@@ -40,44 +40,32 @@
       (let ((record (assoc key (cdr local-table))))
         (if record
             (set-cdr! (car record) value)
-            (let ((location (search-location key
-                                            value
-                                            (cdr local-table))))
-              (display "location")
-              (display location)
-              (newline)
-              (cond ((null? location)
-                     (set! location
-                           (make-tree key value))
-                     (display "location")
-                     (display location)
-                     (newline))
-                    ((null? (entry-key location))
-                     (set-car! (car location) key)
-                     (set-cdr! (car location) value))
-                    ))
+            (search-location key
+                             value
+                             (cdr local-table))
             ))
       (display "before insert end: ")
-      (append (caddr local-table) (list 1 2))
       (display local-table)
       (newline)
       'ok)
 
     (define (search-location key value tree)
-      (display "search: ")
-      (display tree)
       (newline)
       (define (iter key value tree)
         (cond ((null? tree)
-               (display tree)
-               (newline)
-               #|(set! tree
-                     (make-tree key value))|#
-               tree)
+               (set! tree
+                     (make-tree key value)))
               ((null? (entry-key tree))
-               #|(set-car! (car tree) key)
-               (set-cdr! (car tree) value)|#
-               tree)
+               (set-car! (car tree) key)
+               (set-cdr! (car tree) value))
+              ((and (< key (entry-key tree))
+                    (null? (left-branch tree)))
+               (set-car! (cdr tree)
+                         (make-tree key value)))
+              ((and (> key (entry-key tree))
+                    (null? (right-branch tree)))
+               (set-car! (cddr tree)
+                         (make-tree key value)))
               ((< key (entry-key tree))
                (iter key value (left-branch tree)))
               ((> key (entry-key tree))
@@ -102,4 +90,10 @@
 
 (put 3 'a)
 (put 4 'c)
+(put 2 'b)
 
+(get 4)
+(put 5 'd)
+(get 5)
+(put 1 'e)
+(get 1)
