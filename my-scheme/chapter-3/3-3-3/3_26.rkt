@@ -1,0 +1,105 @@
+; 3.26
+
+(define (make-table)
+  (let ((local-table (list '*table*
+                           (cons '()
+                                 '())
+                           '()
+                           '())))
+    (define (make-tree key value)
+      (list (cons key value) '() '()))
+    (define (entry-key tree)
+      (caar tree))
+    (define (entry-value tree)
+      (cdar tree))
+    (define (left-branch tree)
+      (cadr tree))
+    (define (right-branch tree)
+      (caddr tree))
+    
+    (define (lookup key)
+      (display local-table)
+      (newline)
+      (let ((record (assoc key (cdr local-table))))
+        (if record
+            (entry-value record)
+            #f)))
+
+    (define (assoc key records)
+      (cond ((null? records) #f)
+            ((null? (entry-key records)) #f)
+            ((equal? key (entry-key records))
+             records)
+            ((< key (entry-key records))
+             (assoc key (left-branch records)))
+            ((> key (entry-key records))
+             (assoc key (right-branch records)))
+            (else "error assoc!")))
+
+    (define (insert! key value)
+      (let ((record (assoc key (cdr local-table))))
+        (if record
+            (set-cdr! (car record) value)
+            (let ((location (search-location key
+                                            value
+                                            (cdr local-table))))
+              (display "location")
+              (display location)
+              (newline)
+              (cond ((null? location)
+                     (set! location
+                           (make-tree key value))
+                     (display "location")
+                     (display location)
+                     (newline))
+                    ((null? (entry-key location))
+                     (set-car! (car location) key)
+                     (set-cdr! (car location) value))
+                    ))
+            ))
+      (display "before insert end: ")
+      (append (caddr local-table) (list 1 2))
+      (display local-table)
+      (newline)
+      'ok)
+
+    (define (search-location key value tree)
+      (display "search: ")
+      (display tree)
+      (newline)
+      (define (iter key value tree)
+        (cond ((null? tree)
+               (display tree)
+               (newline)
+               #|(set! tree
+                     (make-tree key value))|#
+               tree)
+              ((null? (entry-key tree))
+               #|(set-car! (car tree) key)
+               (set-cdr! (car tree) value)|#
+               tree)
+              ((< key (entry-key tree))
+               (iter key value (left-branch tree)))
+              ((> key (entry-key tree))
+               (iter key value (right-branch tree)))
+              ))
+      (iter key value tree))
+    
+    (define (dispatch m)
+      (cond ((eq? m 'lookup-proc) lookup)
+            ((eq? m 'insert-proc!) insert!)
+            (else "Unknown operation -- TABLE")))
+    dispatch))
+
+(null? (cons '() '()))
+(define a (list (cons 1 2) 3 4))
+(caar a)
+(cdar a)
+
+(define t (make-table))
+(define get (t 'lookup-proc))
+(define put (t 'insert-proc!))
+
+(put 3 'a)
+(put 4 'c)
+
