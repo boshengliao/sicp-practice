@@ -57,3 +57,8 @@
   (add-action! a1 and-action-procedure)
   (add-action! a2 and-action-procedure)
   'ok)
+
+(define (logical-and a b)
+  (cond ((and (= a 1) (= b 1) 1))
+        ((or (= a 0) (= b 0)) 0)
+        (else "Invalid value")))
