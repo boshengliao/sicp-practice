@@ -12,7 +12,7 @@
         (else (assoc key (cdr records)))))
 
 (define (insert! key value table)
-  (let ((record (assoc key table)))
+  (let ((record (assoc key (cdr table))))
     (if record
         (set-cdr! record value)
         (set-cdr! table
