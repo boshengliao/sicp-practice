@@ -97,3 +97,62 @@
 
 (define (add-action! wire action-procedure)
   ((wire 'add-action!) action-procedure))
+
+
+;; 待处理表
+
+;(make-agenda)
+;(empty-agenda? value)
+;(first-agenda-item value)
+;(remove-first-agenda-item! value)
+;(add-to-agenda! time action value)
+;(current-time value)
+
+(define (after-delay delay action)
+  (add-to-agenda! (+ delay (current-time the-agenda))
+                  action
+                  the-agenda))
+
+(define (propagate)
+  (if (empty-agenda? the-agenda)
+      'done
+      (let ((first-time (first-agenda-item the-agenda)))
+        (first-item)
+        (remove-first-agenda-item! the-agenda)
+        (propagate))))
+
+
+;; 一个简单的实例模拟
+(define (probe name wire)
+  (add-actionz1 wire
+                (lambda ()
+                  (newline)
+                  (display name)
+                  (display " ")
+                  (display (curren-time the-agenda))
+                  (display " New-value = ")
+                  (display (get-signal wire)))))
+
+(define the-agenda (make-agenda))
+(define inverter-delay 2)
+(define and-gate-delay 3)
+(define or-gare-delay 5)
+
+(define input-1 (make-wire))
+(define input-2 (make-wire))
+(define sum (make-wire))
+(define carry (make-wire))
+
+(probe 'sum sum)
+
+(probe 'carry carry)
+
+(half-adder input-1 input-2 sum carry)
+
+(get=signal! input-1 1)
+
+(propagate)
+
+(set-signal! input-2 1)
+
+(propagare)
