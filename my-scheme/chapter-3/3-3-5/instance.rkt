@@ -1,5 +1,6 @@
 ; 3.3.5
 
+#|
 ;; 约束系统的使用
 (define C (make-connector))
 (define F (make-connector))
@@ -30,7 +31,7 @@
 (forget-value! C 'user)
 
 (set-value! F 212 'user)
-
+|#
 
 ;; 约束系统的实现
 (define (adder a1 a2 sum)
