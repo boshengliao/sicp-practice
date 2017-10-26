@@ -109,7 +109,7 @@
   (define (me request)
     (display "Unknown request -- CONSTANT")
     request)
-  (connect conector me)
+  (connect connector me)
   (set-value! connector value me)
   me)
 
@@ -136,8 +136,8 @@
 
 ;; 连接器的表示
 (define (make-connector)
-  (let ((value false)
-        (informant false)
+  (let ((value #f)
+        (informant #f)
         (constraints '()))
     (define (set-my-value newval setter)
       (cond ((not (has-value? me))
@@ -152,7 +152,7 @@
             (else 'ignored)))
     (define (forget-my-value retractor)
       (if (eq? retractor informant)
-          (begin (set! informant false)
+          (begin (set! informant #f)
                  (for-each-except setter
                                   inform-about-value
                                   constraints))
@@ -166,7 +166,7 @@
       'done)
     (define (me request)
       (cond ((eq? request 'has-value?)
-             (if informant true false))
+             (if informant #t #f))
             ((eq? request 'value) value)
             ((eq? request 'set-value!) set-my-value)
             ((eq? request 'forget) forget-my-value)
@@ -181,7 +181,7 @@
     (cond ((null? items) 'done)
           ((eq? (car items) exception)
            (loop (cdr items)))
-          (else (procedure (cdr items))
+          (else (procedure (car items))
                 (loop (cdr items)))))
   (loop list))
 
@@ -189,7 +189,7 @@
   (connector 'has-value?))
 
 (define (get-value connector)
-  (connector 'get-value))
+  (connector 'value))
 
 (define (set-value! connector new-value informant)
   ((connector 'set-value!) new-value informant))
