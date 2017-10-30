@@ -21,3 +21,8 @@
 
 (set-value! a 10 'user)
 (set-value! b 6 'user)
+
+(forget-value! a 'user)
+(forget-value! b 'user)
+(set-value! a 20 'user)
+(set-value! b 10 'user)
