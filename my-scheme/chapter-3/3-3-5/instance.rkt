@@ -86,7 +86,11 @@
           ((and (has-value? product) (has-value? m2))
            (set-value! m1
                        (/ (get-value product) (get-value m2))
-                       me))))
+                       me))
+          ((and (not (has-value? m1))
+                (not (has-value? m2)))
+           (newline)
+           (display "Neither m1 & m2 no value!"))))
   (define (process-forget-value)
     (forget-value! product me)
     (forget-value! m1 me)
