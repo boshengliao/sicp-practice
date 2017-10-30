@@ -91,7 +91,7 @@
     (forget-value! product me)
     (forget-value! m1 me)
     (forget-value! m2 me)
-    (process-forget-value))
+    (process-new-value))
   (define (me request)
     (cond ((eq? request 'I-have-a-value)
            (process-new-value))
@@ -148,13 +148,14 @@
                               constraints))
             ((not (= value newval))
              (display "Contradiction ")
+             (newline)
              (list value newval))
             (else 'ignored)))
     (define (forget-my-value retractor)
       (if (eq? retractor informant)
           (begin (set! informant #f)
                  (for-each-except retractor
-                                  inform-about-value
+                                  inform-about-no-value
                                   constraints))
           'ignored))
     (define (connect new-constraint)
