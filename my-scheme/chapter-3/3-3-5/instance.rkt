@@ -153,7 +153,7 @@
     (define (forget-my-value retractor)
       (if (eq? retractor informant)
           (begin (set! informant #f)
-                 (for-each-except setter
+                 (for-each-except retractor
                                   inform-about-value
                                   constraints))
           'ignored))
