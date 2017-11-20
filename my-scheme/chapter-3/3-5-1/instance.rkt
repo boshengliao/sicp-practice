@@ -27,10 +27,17 @@
 
 (define (stream-car stream) (car stream))
 
-(define (stream-cdr stream) (force (cdr stream)))
+;(define (stream-cdr stream) (force-new (cdr stream)))
+(define (stream-cdr stream) (cdr stream))
 
+(define (cons-stream x y) (cons x y))
+
+(define (stream-null? x)
+  (null? x))
 
 ;; 流实现的行为方式
+(define the-empty-stream '())
+
 (define (stream-enumerate-interval low high)
   (if (> low high)
       the-empty-stream
@@ -50,7 +57,7 @@
 (define (delay proc)
   (lambda () proc))
 
-(define (force delayed-object)
+(define (force-new delayed-object)
   (delayed-object))
 
 (define (memo-proc proc)
